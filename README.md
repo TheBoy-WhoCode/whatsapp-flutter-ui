@@ -2,7 +2,7 @@
 
 ## Firebase Setup
 
-For iOS error run the following commands
+For iOS firebase error run the following commands
 
 pod install
 
