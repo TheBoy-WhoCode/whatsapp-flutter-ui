@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:whatsapp_ui/colors.dart';
 import 'package:whatsapp_ui/common/widgets/loader.dart';
 import 'package:whatsapp_ui/features/chat/controller/chat_controller.dart';
-import 'package:whatsapp_ui/info.dart';
 import 'package:whatsapp_ui/features/chat/screens/mobile_chat_screen.dart';
 import 'package:whatsapp_ui/models/chat_contact.dart';
 
@@ -30,14 +29,11 @@ class ContactsList extends ConsumerWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const MobileChatScreen(
-                              name: "Jai Patel",
-                              uid: "2202",
-                            ),
-                          ),
-                        );
+                        Navigator.pushNamed(context, MobileChatScreen.routeName,
+                            arguments: {
+                              'name': chatContactData.name,
+                              'uid': chatContactData.contactId
+                            });
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
