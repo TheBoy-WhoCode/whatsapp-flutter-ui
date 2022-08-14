@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class UserModel {
   final String name;
   final String uid;
@@ -16,9 +14,6 @@ class UserModel {
     required this.phoneNumber,
     required this.groupId,
   });
-
-  
-  
 
   Map<String, dynamic> toMap() {
     return {

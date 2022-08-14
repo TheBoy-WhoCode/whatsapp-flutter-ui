@@ -60,5 +60,7 @@
 	<string>Camera Library use</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Mic use</string>
+	<key>NSContactsUsageDescription</key>  
+	<string>Your description of why you are requesting permissions.</string>
 </dict>
 </plist>
