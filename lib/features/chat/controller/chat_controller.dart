@@ -49,7 +49,7 @@ class ChatController {
             messageReply: messageReply,
           ),
         );
-    ref.read(messageReplyProvider.state).update((state) => null);
+    ref.read(messageReplyProvider.state).update((state) => null); 
   }
 
   void sendFileMessage(
