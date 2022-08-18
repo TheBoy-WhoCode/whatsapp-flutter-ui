@@ -49,7 +49,7 @@ class ChatController {
             messageReply: messageReply,
           ),
         );
-    ref.read(messageReplyProvider.state).update((state) => null); 
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 
   void sendFileMessage(
@@ -71,5 +71,17 @@ class ChatController {
           ),
         );
     ref.read(messageReplyProvider.state).update((state) => null);
+  }
+
+  void setChatMessageSeen(
+    BuildContext context,
+    String recieverUserId,
+    String messageId,
+  ) {
+    chatRepository.chatMesssageSeen(
+      context,
+      recieverUserId,
+      messageId,
+    );
   }
 }
