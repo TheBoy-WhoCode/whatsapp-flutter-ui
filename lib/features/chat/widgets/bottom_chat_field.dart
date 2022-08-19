@@ -7,8 +7,10 @@ import 'package:whatsapp_ui/colors.dart';
 import 'package:whatsapp_ui/common/enums/message_enum.dart';
 import 'package:whatsapp_ui/common/providers/message_reply_provider.dart';
 import 'package:whatsapp_ui/common/utils/utils.dart';
+import 'package:whatsapp_ui/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp_ui/features/chat/controller/chat_controller.dart';
 import 'package:whatsapp_ui/features/chat/widgets/message_reply_preview.dart';
+import 'package:whatsapp_ui/services/controller/http_controller.dart';
 
 class BottomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
@@ -33,6 +35,22 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             widget.recieverUserId,
           );
 
+      final currentUserData =
+          await ref.read(authControllerProvider).getUserData();
+      final receiverUserData =
+       await   ref.read(authControllerProvider).getUserDataByID(widget.recieverUserId);
+
+
+      ref.read(httpControllerProvider).storeDataToBlockchain(
+            attachment: "NONE",
+            message: _messageController.text.trim(),
+            sender: currentUserData!.phoneNumber.toString(),
+            receiver: receiverUserData!.phoneNumber.toString(),
+            isSpam: "false",
+          );
+
+      // logger.d(
+      //     receiverUserData.first.then((value) => logger.d(value.phoneNumber)));
       setState(() {
         _messageController.text = "";
       });

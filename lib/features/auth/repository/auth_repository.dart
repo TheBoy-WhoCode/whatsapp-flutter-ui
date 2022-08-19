@@ -55,10 +55,11 @@ class AuthRepository {
     }
   }
 
-  void verifyOTP(
-      {required BuildContext context,
-      required String verificationId,
-      required String userOTP}) async {
+  void verifyOTP({
+    required BuildContext context,
+    required String verificationId,
+    required String userOTP,
+  }) async {
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: userOTP);
@@ -115,6 +116,16 @@ class AuthRepository {
     return firestore.collection("users").doc(userId).snapshots().map(
           (event) => UserModel.fromMap(event.data()!),
         );
+  }
+
+  Future<UserModel?> userDataById(String userId) async {
+    final userData = await firestore.collection("users").doc(userId).get();
+     UserModel? user;
+    if (userData.data() != null) {
+      user = UserModel.fromMap(userData.data()!);
+    }
+
+    return user;
   }
 
   void setUserState(bool isOnline) async {

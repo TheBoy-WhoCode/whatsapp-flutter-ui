@@ -48,6 +48,12 @@ class AuthController {
     return authRepository.userData(userId);
   }
 
+  Future<UserModel?> getUserDataByID(String userId) async {
+    UserModel? user = await authRepository.userDataById(userId);
+    return user;
+  }
+
+
   void setUserState(bool isOnline) {
     authRepository.setUserState(isOnline);
   }
