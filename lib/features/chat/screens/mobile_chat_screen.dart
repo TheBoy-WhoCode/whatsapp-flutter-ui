@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:whatsapp_ui/colors.dart';
 import 'package:whatsapp_ui/common/providers/loader_provider.dart';
-import 'package:whatsapp_ui/common/utils/utils.dart';
 import 'package:whatsapp_ui/common/widgets/loader.dart';
 import 'package:whatsapp_ui/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp_ui/features/chat/controller/chat_controller.dart';

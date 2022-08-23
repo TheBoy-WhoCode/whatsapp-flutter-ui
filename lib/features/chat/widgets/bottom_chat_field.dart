@@ -40,8 +40,8 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
           await ref.read(httpControllerProvider).storeDataToBlockchain(
                 attachment: "NONE",
                 message: _messageController.text.trim(),
-                sender: currentUserData!.phoneNumber.toString(),
-                receiver: receiverUserData!.phoneNumber.toString(),
+                sender: currentUserData!.uid,
+                receiver: receiverUserData!.uid,
                 isSpam: "false",
               );
 

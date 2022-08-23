@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swipe_to/swipe_to.dart';
 
 import 'package:whatsapp_ui/colors.dart';
 import 'package:whatsapp_ui/common/enums/message_enum.dart';
-import 'package:whatsapp_ui/common/utils/utils.dart';
+import 'package:whatsapp_ui/features/chat/controller/chat_controller.dart';
+import 'package:whatsapp_ui/features/chat/widgets/contacts_list.dart';
 import 'package:whatsapp_ui/features/chat/widgets/display_text_image_gif.dart';
+import 'package:whatsapp_ui/models/message.dart';
 
-class MyMessageCard extends StatefulWidget {
+class MyMessageCard extends ConsumerStatefulWidget {
   final String message;
   final String date;
   final MessageEnum type;
@@ -16,6 +20,9 @@ class MyMessageCard extends StatefulWidget {
   final MessageEnum repliedMessageType;
   final bool isSeen;
   final bool isForwarded;
+  final String senderId;
+  final String receiverId;
+  final String messageId;
 
   const MyMessageCard({
     Key? key,
@@ -28,41 +35,87 @@ class MyMessageCard extends StatefulWidget {
     required this.repliedMessageType,
     required this.isSeen,
     required this.isForwarded,
+    required this.senderId,
+    required this.receiverId,
+    required this.messageId,
   }) : super(key: key);
 
   @override
-  State<MyMessageCard> createState() => _MyMessageCardState();
+  ConsumerState<MyMessageCard> createState() => _MyMessageCardState();
 }
 
-class _MyMessageCardState extends State<MyMessageCard> {
+class _MyMessageCardState extends ConsumerState<MyMessageCard> {
   bool isMessageSelected = false;
 
-  void onLongPressMessage() {
-    isMessageSelected = true;
-    setState(() {});
+void forwardMessage(BuildContext context, Message message) {
+    Navigator.pop(context);
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return ContactsList(
+            message: message,
+            isForwarded: true,
+          );
+        });
+  }
+   void onLongPressMessage({
+    required WidgetRef ref,
+    required String messageId,
+    required String receiverId,
+    required String senderId,
+    required BuildContext context,
+  }) async {
+    final message = await ref.read(chatControllerProvider).getMessageByID(
+          messageId: messageId,
+          senderId: senderId,
+          receiverId: receiverId,
+        );
+
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            ListTile(
+              leading: const FaIcon(FontAwesomeIcons.share),
+              title: const Text('Forward'),
+              onTap: () {
+                forwardMessage(context, message!);
+              },
+            ),
+            const ListTile(
+              leading: Icon(Icons.copy),
+              title: Text('Copy'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  void onTapMessage() {
-    isMessageSelected = false;
+  void onTapMessage() {}
 
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
     final isReplying = widget.repliedText.isNotEmpty;
-   
     return SwipeTo(
       onLeftSwipe: widget.onLeftSwipe,
       child: Align(
         alignment: Alignment.centerRight,
-        child: InkWell(
-          onTap: onTapMessage,
-          onLongPress: onLongPressMessage,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width - 45,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width - 45,
+          ),
+          child: InkWell(
+            onLongPress: () => onLongPressMessage(
+              receiverId: widget.receiverId,
+              senderId: widget.senderId,
+              messageId: widget.messageId,
+              ref: ref,
+              context: context,
             ),
+            onTap: onTapMessage,
             child: Card(
               elevation: 1,
               shape: RoundedRectangleBorder(
