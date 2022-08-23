@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import 'package:whatsapp_ui/colors.dart';
-import 'package:whatsapp_ui/common/utils/utils.dart';
 import 'package:whatsapp_ui/common/widgets/loader.dart';
 import 'package:whatsapp_ui/features/chat/controller/chat_controller.dart';
 import 'package:whatsapp_ui/features/chat/screens/mobile_chat_screen.dart';
@@ -50,8 +49,7 @@ class ContactsList extends ConsumerWidget {
               shrinkWrap: true,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                var chatContactData = snapshot.data![index];
-               
+                var chatContactData = snapshot.data![index];   
                 return Column(
                   children: [
                     InkWell(

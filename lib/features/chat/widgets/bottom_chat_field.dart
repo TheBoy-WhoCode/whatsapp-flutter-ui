@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:whatsapp_ui/colors.dart';
 import 'package:whatsapp_ui/common/enums/message_enum.dart';
+import 'package:whatsapp_ui/common/providers/loader_provider.dart';
 import 'package:whatsapp_ui/common/providers/message_reply_provider.dart';
 import 'package:whatsapp_ui/common/utils/utils.dart';
 import 'package:whatsapp_ui/features/auth/controller/auth_controller.dart';
@@ -28,6 +28,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   final TextEditingController _messageController = TextEditingController();
 
   void sendTextMessage() async {
+    ref.read(loaderProvider.notifier).state = true;
     if (isShowSendButton) {
       final currentUserData =
           await ref.read(authControllerProvider).getUserData();
@@ -45,6 +46,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
               );
 
       if (response.code == 200) {
+        ref.read(loaderProvider.notifier).state = false;
         ref.read(chatControllerProvider).sendTextMessage(
               context: context,
               text: _messageController.text.trim(),
