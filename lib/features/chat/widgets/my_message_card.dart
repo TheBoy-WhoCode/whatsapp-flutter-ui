@@ -3,6 +3,7 @@ import 'package:swipe_to/swipe_to.dart';
 
 import 'package:whatsapp_ui/colors.dart';
 import 'package:whatsapp_ui/common/enums/message_enum.dart';
+import 'package:whatsapp_ui/common/utils/utils.dart';
 import 'package:whatsapp_ui/features/chat/widgets/display_text_image_gif.dart';
 
 class MyMessageCard extends StatefulWidget {
@@ -14,6 +15,7 @@ class MyMessageCard extends StatefulWidget {
   final String username;
   final MessageEnum repliedMessageType;
   final bool isSeen;
+  final bool isForwarded;
 
   const MyMessageCard({
     Key? key,
@@ -25,6 +27,7 @@ class MyMessageCard extends StatefulWidget {
     required this.username,
     required this.repliedMessageType,
     required this.isSeen,
+    required this.isForwarded,
   }) : super(key: key);
 
   @override
@@ -48,7 +51,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
   @override
   Widget build(BuildContext context) {
     final isReplying = widget.repliedText.isNotEmpty;
-
+   
     return SwipeTo(
       onLeftSwipe: widget.onLeftSwipe,
       child: Align(
@@ -106,6 +109,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                             child: DisplayTextImageGif(
                               message: widget.repliedText,
                               type: widget.repliedMessageType,
+                              isForwarded: widget.isForwarded,
                             ),
                           ),
                           const SizedBox(
@@ -115,6 +119,7 @@ class _MyMessageCardState extends State<MyMessageCard> {
                         DisplayTextImageGif(
                           message: widget.message,
                           type: widget.type,
+                          isForwarded: widget.isForwarded,
                         ),
                       ],
                     ),

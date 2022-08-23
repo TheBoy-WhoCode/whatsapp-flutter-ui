@@ -29,28 +29,31 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
 
   void sendTextMessage() async {
     if (isShowSendButton) {
-      ref.read(chatControllerProvider).sendTextMessage(
-            context,
-            _messageController.text.trim(),
-            widget.recieverUserId,
-          );
-
       final currentUserData =
           await ref.read(authControllerProvider).getUserData();
-      final receiverUserData =
-       await   ref.read(authControllerProvider).getUserDataByID(widget.recieverUserId);
+      final receiverUserData = await ref
+          .read(authControllerProvider)
+          .getUserDataByID(widget.recieverUserId);
 
+      final response =
+          await ref.read(httpControllerProvider).storeDataToBlockchain(
+                attachment: "NONE",
+                message: _messageController.text.trim(),
+                sender: currentUserData!.phoneNumber.toString(),
+                receiver: receiverUserData!.phoneNumber.toString(),
+                isSpam: "false",
+              );
 
-      ref.read(httpControllerProvider).storeDataToBlockchain(
-            attachment: "NONE",
-            message: _messageController.text.trim(),
-            sender: currentUserData!.phoneNumber.toString(),
-            receiver: receiverUserData!.phoneNumber.toString(),
-            isSpam: "false",
-          );
+      if (response.code == 200) {
+        ref.read(chatControllerProvider).sendTextMessage(
+              context: context,
+              text: _messageController.text.trim(),
+              recieverUserId: widget.recieverUserId,
+              blockId: response.id.toString(),
+              isForwarded: false,
+            );
+      }
 
-      // logger.d(
-      //     receiverUserData.first.then((value) => logger.d(value.phoneNumber)));
       setState(() {
         _messageController.text = "";
       });
@@ -60,13 +63,31 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   void sendFileMessage(
     File file,
     MessageEnum messageEnum,
-  ) {
-    ref.read(chatControllerProvider).sendFileMessage(
-          context,
-          file,
-          widget.recieverUserId,
-          messageEnum,
-        );
+  ) async {
+    final currentUserData =
+        await ref.read(authControllerProvider).getUserData();
+    final receiverUserData = await ref
+        .read(authControllerProvider)
+        .getUserDataByID(widget.recieverUserId);
+
+    final response =
+        await ref.read(httpControllerProvider).storeDataToBlockchain(
+              attachment: "NONE",
+              message: _messageController.text.trim(),
+              sender: currentUserData!.phoneNumber.toString(),
+              receiver: receiverUserData!.phoneNumber.toString(),
+              isSpam: "false",
+            );
+    if (response.code == 200) {
+      ref.read(chatControllerProvider).sendFileMessage(
+            context: context,
+            file: file,
+            recieverUserId: widget.recieverUserId,
+            messageEnum: messageEnum,
+            blockId: response.id.toString(),
+            isForwarded: false,
+          );
+    }
   }
 
   void selectVideo() async {

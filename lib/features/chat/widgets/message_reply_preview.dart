@@ -50,6 +50,7 @@ class MessageReplyPreview extends ConsumerWidget {
           DisplayTextImageGif(
             message: messageReply.message,
             type: messageReply.messageEnum,
+            isForwarded: false,
           ),
         ],
       ),

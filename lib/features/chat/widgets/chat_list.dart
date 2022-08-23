@@ -63,6 +63,7 @@ class _ChatListState extends ConsumerState<ChatList> {
           itemCount: snapshot.data!.length,
           itemBuilder: (context, index) {
             final messageData = snapshot.data![index];
+           
             var timeSent = DateFormat.Hm().format(messageData.timeSent);
             if (!messageData.isSeen &&
                 messageData.recieverId ==
@@ -88,9 +89,13 @@ class _ChatListState extends ConsumerState<ChatList> {
                   messageData.type,
                 ),
                 isSeen: messageData.isSeen,
+                isForwarded: messageData.isForwarded,
               );
             }
             return SenderMessageCard(
+              senderId: messageData.senderId,
+              receiverId: messageData.recieverId,
+              messageId: messageData.messageId,
               message: messageData.text,
               date: timeSent,
               type: messageData.type,
@@ -102,6 +107,7 @@ class _ChatListState extends ConsumerState<ChatList> {
                 messageData.type,
               ),
               repliedText: messageData.repliedMessage,
+              isForwarded: messageData.isForwarded,
             );
           },
         );

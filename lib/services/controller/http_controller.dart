@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_ui/models/blockchain_datastore.dart';
 import 'package:whatsapp_ui/services/http_service.dart';
 
 import 'package:whatsapp_ui/services/repository/http_repository.dart';
@@ -16,19 +17,21 @@ class HttpController {
     required this.httpRepository,
   });
 
-  void storeDataToBlockchain({
+  Future<BlockchainDataStore> storeDataToBlockchain({
     required String message,
     String attachment = 'NONE',
     required String sender,
     required String receiver,
     String isSpam = "false",
-  }) {
-    httpRepository.storeDataToBlockchain(
+  }) async {
+    final response = await httpRepository.storeDataToBlockchain(
       attachment: attachment,
       message: message,
       sender: sender,
       receiver: receiver,
       isSpam: isSpam,
     );
+
+    return response;
   }
 }

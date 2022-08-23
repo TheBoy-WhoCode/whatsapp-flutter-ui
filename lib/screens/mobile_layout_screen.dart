@@ -89,7 +89,7 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
             ],
           ),
         ),
-        body: const ContactsList(),
+        body: const ContactsList(isForwarded: false,),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, SelectContactsScreen.routeName);

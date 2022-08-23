@@ -121,8 +121,12 @@ class ChatRepository {
     required MessageReply? messageReply,
     required String senderUsername,
     required String receiverUsername,
+    required String blockId,
+    required bool isForwarded,
   }) async {
     final message = Message(
+      
+      blockId: blockId,
       senderId: auth.currentUser!.uid,
       recieverId: recieverUserId,
       text: text,
@@ -137,7 +141,7 @@ class ChatRepository {
               ? senderUsername
               : receiverUsername,
       repliedMessageType:
-          messageReply == null ? MessageEnum.text : messageReply.messageEnum,
+          messageReply == null ? MessageEnum.text : messageReply.messageEnum, isForwarded: isForwarded,
     );
 
     await firestore
@@ -159,12 +163,39 @@ class ChatRepository {
         .set(message.toMap());
   }
 
+  Future<Message?> getMessageByID({
+    required String messageId,
+    required String senderId,
+    required String receiverId,
+  }) async {
+    // auth.currentUser!.uid
+    final message = await firestore
+        .collection('users')
+        .doc(receiverId)
+        .collection('chats')
+        .doc(senderId)
+        .collection("messages")
+        .doc(messageId)
+        .get();
+    Message? msg;
+    if (message.data() != null) {
+      msg = Message.fromMap(message.data()!);
+    }
+
+    return msg;
+   
+  }
+
   void sendTextMessage({
+  
     required BuildContext context,
     required String text,
     required String recieverUserId,
     required UserModel senderUser,
     required MessageReply? messageReply,
+    required String blockId,
+    String? msgId,
+    required isForwarded,
   }) async {
     try {
       var timeSent = DateTime.now();
@@ -188,12 +219,15 @@ class ChatRepository {
         text: text,
         timeSent: timeSent,
         messageType: MessageEnum.text,
-        messageId: messageId,
+        messageId: msgId ?? messageId,
         recieverUserName: recieverUserData.name,
         userName: senderUser.name,
         messageReply: messageReply,
         receiverUsername: recieverUserData.name,
         senderUsername: senderUser.name,
+        blockId: blockId,
+        isForwarded: isForwarded,
+       
       );
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
@@ -208,6 +242,8 @@ class ChatRepository {
     required ProviderRef ref,
     required MessageEnum messageEnum,
     required MessageReply? messageReply,
+    required String blockId,
+    required bool isForwarded
   }) async {
     try {
       var timeSent = DateTime.now();
@@ -262,6 +298,8 @@ class ChatRepository {
         messageReply: messageReply,
         receiverUsername: recieverUserData.name,
         senderUsername: senderUserData.name,
+        blockId: blockId,
+        isForwarded: isForwarded,
       );
     } catch (e) {
       showSnackBar(context: context, content: e.toString());

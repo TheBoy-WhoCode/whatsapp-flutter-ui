@@ -31,8 +31,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final arguments = settings.arguments as Map<String, dynamic>;
       final name = arguments['name'];
       final uid = arguments['uid'];
+      final message = arguments['message'];
+      final isForwarded = arguments['isForwarded'];
+
       return MaterialPageRoute(
-        builder: (context) =>  MobileChatScreen(name: name, uid: uid,),
+        builder: (context) => MobileChatScreen(
+          name: name,
+          uid: uid,
+          message: message,
+          isForwarded: isForwarded,
+        ),
       );
     default:
       return MaterialPageRoute(

@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_ui/common/enums/http_method_enum.dart';
 import 'package:whatsapp_ui/common/utils/utils.dart';
+import 'package:whatsapp_ui/models/blockchain_datastore.dart';
 
 import 'package:whatsapp_ui/services/http_service.dart';
 
@@ -19,7 +22,7 @@ class HttpRepository {
     required this.httpService,
   });
 
-  void storeDataToBlockchain({
+  Future<BlockchainDataStore> storeDataToBlockchain({
     required String message,
     String attachment = 'NONE',
     required String sender,
@@ -34,6 +37,7 @@ class HttpRepository {
       'reciver': receiver,
       'isSpam': isSpam,
     });
-    logger.d(response);
+    final result =  BlockchainDataStore.fromMap(response.data);
+    return result;
   }
 }

@@ -34,11 +34,27 @@ class ChatController {
     return chatRepository.getChatStream(recieverUserId);
   }
 
-  void sendTextMessage(
-    BuildContext context,
-    String text,
-    String recieverUserId,
-  ) {
+  Future<Message?> getMessageByID({
+    required String messageId,
+    required String senderId,
+    required String receiverId,
+  }) async {
+    final message = chatRepository.getMessageByID(
+      messageId: messageId,
+      senderId: senderId,
+      receiverId: receiverId,
+    );
+    return message;
+  }
+
+  void sendTextMessage({
+    required BuildContext context,
+    required String text,
+    required String recieverUserId,
+    required String blockId,
+    String? messageId,
+    required isForwarded,
+  }) {
     final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendTextMessage(
@@ -47,17 +63,22 @@ class ChatController {
             recieverUserId: recieverUserId,
             senderUser: value!,
             messageReply: messageReply,
+            blockId: blockId,
+            msgId: messageId,
+            isForwarded: isForwarded,
           ),
         );
     ref.read(messageReplyProvider.state).update((state) => null);
   }
 
-  void sendFileMessage(
-    BuildContext context,
-    File file,
-    String recieverUserId,
-    MessageEnum messageEnum,
-  ) {
+  void sendFileMessage({
+    required BuildContext context,
+    required File file,
+    required String recieverUserId,
+    required MessageEnum messageEnum,
+    required String blockId,
+    required bool isForwarded,
+  }) {
     final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendFileMessage(
@@ -68,6 +89,8 @@ class ChatController {
             messageEnum: messageEnum,
             ref: ref,
             messageReply: messageReply,
+            blockId: blockId,
+            isForwarded: isForwarded,
           ),
         );
     ref.read(messageReplyProvider.state).update((state) => null);

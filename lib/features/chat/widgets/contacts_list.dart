@@ -1,14 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+
 import 'package:whatsapp_ui/colors.dart';
+import 'package:whatsapp_ui/common/utils/utils.dart';
 import 'package:whatsapp_ui/common/widgets/loader.dart';
 import 'package:whatsapp_ui/features/chat/controller/chat_controller.dart';
 import 'package:whatsapp_ui/features/chat/screens/mobile_chat_screen.dart';
 import 'package:whatsapp_ui/models/chat_contact.dart';
+import 'package:whatsapp_ui/models/message.dart';
 
 class ContactsList extends ConsumerWidget {
-  const ContactsList({Key? key}) : super(key: key);
+  final Message? message;
+  final bool isForwarded;
+  const ContactsList({
+    Key? key,
+    this.message,
+    required this.isForwarded,
+  }) : super(key: key);
+
+  void forwardMessage({
+    required BuildContext context,
+    required WidgetRef ref,
+    required Message message,
+    required ChatContact chatContact,
+  }) {
+  
+    ref.read(chatControllerProvider).sendTextMessage(
+          context: context,
+          text: message.text,
+          recieverUserId: chatContact.contactId,
+          blockId: message.blockId,
+          messageId: message.messageId,
+          isForwarded: true,
+        );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,6 +51,7 @@ class ContactsList extends ConsumerWidget {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 var chatContactData = snapshot.data![index];
+               
                 return Column(
                   children: [
                     InkWell(
@@ -32,7 +59,9 @@ class ContactsList extends ConsumerWidget {
                         Navigator.pushNamed(context, MobileChatScreen.routeName,
                             arguments: {
                               'name': chatContactData.name,
-                              'uid': chatContactData.contactId
+                              'uid': chatContactData.contactId,
+                              'message': message,
+                              'isForwarded': isForwarded,
                             });
                       },
                       child: Padding(
