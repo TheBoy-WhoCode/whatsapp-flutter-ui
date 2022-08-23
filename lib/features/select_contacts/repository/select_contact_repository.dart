@@ -43,7 +43,8 @@ class SelectContactRepository {
           Navigator.pushNamed(context, MobileChatScreen.routeName,
               arguments: {
                 'name': userData.name,
-                'uid' : userData.uid
+                'uid' : userData.uid,
+                'isForwarded' : false,
               },);
         }
       }
