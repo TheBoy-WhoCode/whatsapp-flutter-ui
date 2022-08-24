@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fuzzywuzzy/fuzzywuzzy.dart';
-import 'package:string_similarity/string_similarity.dart';
 import 'package:whatsapp_ui/colors.dart';
 import 'package:whatsapp_ui/common/enums/message_enum.dart';
 import 'package:whatsapp_ui/common/providers/loader_provider.dart';
@@ -29,8 +27,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   bool isShowSendButton = false;
   bool isSus = false;
   final TextEditingController _messageController = TextEditingController();
-  // String susWord =
-  //     "I have planted planting gonna going am me someone killer assasin kill rape gun abort attack weapon bomb sexual assault death mission theft murder disaster terror kidnap narcos drugs virus trafficking abuse torture grenade ak47 pistol war military combact nuclear war cyber attack brush fire border attack nuclear radioactive smuggling chloroform narcotics terrorism assasination bombing car bomb suicide hazard threat nuclear threat mass kill biological weapon airport attack station attack assault";
+  
   List<String> susWords = [
     "assasin",
     "kill",
