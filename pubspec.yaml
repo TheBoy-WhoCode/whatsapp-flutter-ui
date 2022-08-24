@@ -50,6 +50,8 @@ dependencies:
   dio: ^4.0.6
   logger: ^1.1.0
   font_awesome_flutter: ^10.1.0
+  string_similarity: ^2.0.0
+  fuzzywuzzy: ^0.2.0
 
 dev_dependencies:
   flutter_test:
