@@ -8,11 +8,13 @@ class DisplayTextImageGif extends StatelessWidget {
   final String message;
   final MessageEnum type;
   final bool isForwarded;
+  final int messageForwardCount;
   const DisplayTextImageGif({
     Key? key,
     required this.message,
     required this.type,
     required this.isForwarded,
+    required this.messageForwardCount,
   }) : super(key: key);
 
   @override
@@ -24,12 +26,17 @@ class DisplayTextImageGif extends StatelessWidget {
               isForwarded
                   ? Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
-                        FaIcon(
+                      children:  [
+                       const  FaIcon(
                           FontAwesomeIcons.share,
                           size: 14,
                         ),
-                        Text(
+                     messageForwardCount >= 5 ? const   Text(
+                          " forwarded many times",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ) : const   Text(
                           " forwarded",
                           style: TextStyle(
                             fontSize: 14,

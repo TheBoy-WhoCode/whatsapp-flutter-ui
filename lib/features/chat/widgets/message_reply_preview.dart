@@ -51,6 +51,7 @@ class MessageReplyPreview extends ConsumerWidget {
             message: messageReply.message,
             type: messageReply.messageEnum,
             isForwarded: false,
+            messageForwardCount: 0,
           ),
         ],
       ),

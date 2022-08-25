@@ -27,6 +27,8 @@ class SenderMessageCard extends ConsumerWidget {
     required this.repliedMessageType,
     required this.messageId,
     required this.isForwarded,
+    required this.messageForwardCount,
+    
   }) : super(key: key);
 
   final String message;
@@ -40,6 +42,7 @@ class SenderMessageCard extends ConsumerWidget {
   final MessageEnum repliedMessageType;
   final String messageId;
   final bool isForwarded;
+  final int messageForwardCount;
 
   void forwardMessage(BuildContext context, Message message) {
     Navigator.pop(context);
@@ -183,6 +186,7 @@ class SenderMessageCard extends ConsumerWidget {
                               message: repliedText,
                               type: repliedMessageType,
                               isForwarded: isForwarded,
+                              messageForwardCount: messageForwardCount,
                             ),
                           ),
                           const SizedBox(
@@ -193,6 +197,7 @@ class SenderMessageCard extends ConsumerWidget {
                           message: message,
                           type: type,
                           isForwarded: isForwarded,
+                           messageForwardCount: messageForwardCount,
                         ),
                       ],
                     ),

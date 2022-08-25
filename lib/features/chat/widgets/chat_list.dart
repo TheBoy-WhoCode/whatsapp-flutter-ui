@@ -93,6 +93,7 @@ class _ChatListState extends ConsumerState<ChatList> {
                 ),
                 isSeen: messageData.isSeen,
                 isForwarded: messageData.isForwarded,
+                messageForwardCount: messageData.messageForwardedCount,
               );
             }
             return SenderMessageCard(
@@ -111,6 +112,7 @@ class _ChatListState extends ConsumerState<ChatList> {
               ),
               repliedText: messageData.repliedMessage,
               isForwarded: messageData.isForwarded,
+              messageForwardCount: messageData.messageForwardedCount,
             );
           },
         );
