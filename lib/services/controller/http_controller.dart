@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_ui/models/blockchain_datastore.dart';
 import 'package:whatsapp_ui/models/forward_message_model.dart';
+import 'package:whatsapp_ui/models/get_total_message_count.dart';
+import 'package:whatsapp_ui/models/report_model.dart';
 import 'package:whatsapp_ui/services/repository/http_repository.dart';
 
 final httpControllerProvider = Provider<HttpController>((ref) {
@@ -46,7 +48,13 @@ class HttpController {
     return response;
   }
 
-  // Future<GetTotalMessageCount> getTotalMessageCount(String id) async{
+  Future<GetTotalMessageCount> getTotalMessageCount(String id) async {
+    final response = await httpRepository.getTotalMessageCount(id);
+    return response;
+  }
 
-  // }
+  Future<ReportModel> reportMessage(String id) async {
+    final response = await httpRepository.reportMessage(id);
+    return response;
+  }
 }

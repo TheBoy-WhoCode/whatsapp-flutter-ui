@@ -123,9 +123,10 @@ class ChatRepository {
     required String receiverUsername,
     required String blockId,
     required bool isForwarded,
+    required int messageForwardedCount,
   }) async {
     final message = Message(
-      
+      messageForwardedCount: messageForwardedCount,
       blockId: blockId,
       senderId: auth.currentUser!.uid,
       recieverId: recieverUserId,
@@ -195,7 +196,8 @@ class ChatRepository {
     required MessageReply? messageReply,
     required String blockId,
     String? msgId,
-    required isForwarded,
+    required bool isForwarded,
+    required int messageForwardedCount,
   }) async {
     try {
       var timeSent = DateTime.now();
@@ -215,6 +217,7 @@ class ChatRepository {
       );
 
       _saveMessageToMessageSubCollection(
+        messageForwardedCount: messageForwardedCount,
         recieverUserId: recieverUserId,
         text: text,
         timeSent: timeSent,
@@ -243,7 +246,8 @@ class ChatRepository {
     required MessageEnum messageEnum,
     required MessageReply? messageReply,
     required String blockId,
-    required bool isForwarded
+    required bool isForwarded,
+    required int messageForwardedCount,
   }) async {
     try {
       var timeSent = DateTime.now();
@@ -288,6 +292,7 @@ class ChatRepository {
       );
 
       _saveMessageToMessageSubCollection(
+        messageForwardedCount: messageForwardedCount,
         recieverUserId: recieverUserId,
         text: imageUrl,
         timeSent: timeSent,

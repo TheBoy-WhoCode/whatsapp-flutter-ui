@@ -116,6 +116,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                 recieverUserId: widget.recieverUserId,
                 blockId: response.id.toString(),
                 isForwarded: false,
+                messageForwardedCount: 0,
               );
         }
 
@@ -152,6 +153,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             messageEnum: messageEnum,
             blockId: response.id.toString(),
             isForwarded: false,
+            messageForwardedCount: 0,
           );
     }
   }

@@ -18,22 +18,22 @@ class ContactsList extends ConsumerWidget {
     required this.isForwarded,
   }) : super(key: key);
 
-  void forwardMessage({
-    required BuildContext context,
-    required WidgetRef ref,
-    required Message message,
-    required ChatContact chatContact,
-  }) {
+  // void forwardMessage({
+  //   required BuildContext context,
+  //   required WidgetRef ref,
+  //   required Message message,
+  //   required ChatContact chatContact,
+  // }) {
   
-    ref.read(chatControllerProvider).sendTextMessage(
-          context: context,
-          text: message.text,
-          recieverUserId: chatContact.contactId,
-          blockId: message.blockId,
-          messageId: message.messageId,
-          isForwarded: true,
-        );
-  }
+  //   ref.read(chatControllerProvider).sendTextMessage(
+  //         context: context,
+  //         text: message.text,
+  //         recieverUserId: chatContact.contactId,
+  //         blockId: message.blockId,
+  //         messageId: message.messageId,
+  //         isForwarded: true,
+  //       );
+  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

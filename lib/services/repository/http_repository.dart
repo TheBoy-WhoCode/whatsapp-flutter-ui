@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_ui/common/enums/http_method_enum.dart';
-import 'package:whatsapp_ui/common/utils/utils.dart';
 import 'package:whatsapp_ui/models/blockchain_datastore.dart';
 import 'package:whatsapp_ui/models/forward_message_model.dart';
 import 'package:whatsapp_ui/models/get_total_message_count.dart';
+import 'package:whatsapp_ui/models/report_model.dart';
 
 import 'package:whatsapp_ui/services/http_service.dart';
 
@@ -42,10 +42,18 @@ class HttpRepository {
   }
 
   Future<GetTotalMessageCount> getTotalMessageCount(String id) async {
+    final response = await read(httpServiceProvider).request(
+        endPoint: 'totalSenders', method: Method.POST, params: {'id': id});
+    final result = GetTotalMessageCount.fromJson(response.data);
+
+    return result;
+  }
+
+  Future<ReportModel> reportMessage(String id) async {
     final response = await read(httpServiceProvider)
-        .request(endPoint: 'senders', method: Method.GET, params: {'id': id});
-    final result = GetTotalMessageCount.fromJson(response);
-    logger.d(result);
+        .request(endPoint: "report", method: Method.POST, params: {"id": id});
+    final result = ReportModel.fromJson(response.data);
+    
     return result;
   }
 

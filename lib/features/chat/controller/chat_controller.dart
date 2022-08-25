@@ -53,7 +53,8 @@ class ChatController {
     required String recieverUserId,
     required String blockId,
     String? messageId,
-    required isForwarded,
+    required  bool isForwarded,
+    required int messageForwardedCount,
   }) {
     final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
@@ -66,6 +67,7 @@ class ChatController {
             blockId: blockId,
             msgId: messageId,
             isForwarded: isForwarded,
+            messageForwardedCount: messageForwardedCount,
           ),
         );
     ref.read(messageReplyProvider.state).update((state) => null);
@@ -78,6 +80,7 @@ class ChatController {
     required MessageEnum messageEnum,
     required String blockId,
     required bool isForwarded,
+    required int messageForwardedCount,
   }) {
     final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
@@ -91,6 +94,7 @@ class ChatController {
             messageReply: messageReply,
             blockId: blockId,
             isForwarded: isForwarded,
+            messageForwardedCount: messageForwardedCount,
           ),
         );
     ref.read(messageReplyProvider.state).update((state) => null);

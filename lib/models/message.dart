@@ -13,6 +13,7 @@ class Message {
   final MessageEnum repliedMessageType;
   final String blockId;
   final bool isForwarded;
+  final int messageForwardedCount;
 
   Message({
     required this.senderId,
@@ -27,6 +28,7 @@ class Message {
     required this.repliedMessageType,
     required this.blockId,
     required this.isForwarded,
+    required this.messageForwardedCount,
   });
 
   // Map<String, dynamic> toMap() {
@@ -59,8 +61,6 @@ class Message {
   //   );
   // }
 
-  
-
   Map<String, dynamic> toMap() {
     return {
       'senderId': senderId,
@@ -75,6 +75,7 @@ class Message {
       'repliedMessageType': repliedMessageType.type,
       'blockId': blockId,
       'isForwarded': isForwarded,
+      'messageForwardedCount' : messageForwardedCount,
     };
   }
 
@@ -92,8 +93,7 @@ class Message {
       repliedMessageType: (map['repliedMessageType'] as String).toEnum(),
       blockId: map['blockId'] ?? '',
       isForwarded: map['isForwarded'] ?? false,
+      messageForwardedCount : map['messageForwardedCount'] ?? 0,
     );
   }
-
- 
 }

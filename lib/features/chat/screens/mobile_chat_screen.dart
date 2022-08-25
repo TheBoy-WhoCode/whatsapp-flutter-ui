@@ -34,15 +34,17 @@ class MobileChatScreen extends ConsumerWidget {
     required Message message,
     required String recieverUserId,
   }) async {
-    
     final response =
         await ref.read(httpControllerProvider).forwardMessageToBlockchain(
               blockId: message.blockId,
               senderId: message.senderId,
               receiverId: message.recieverId,
             );
+    final countRes = await ref
+        .read(httpControllerProvider)
+        .getTotalMessageCount(message.blockId);
+  
     if (response.code == 200) {
-     
       ref.read(chatControllerProvider).sendTextMessage(
             context: context,
             text: message.text,
@@ -50,6 +52,7 @@ class MobileChatScreen extends ConsumerWidget {
             blockId: message.blockId,
             messageId: message.messageId,
             isForwarded: true,
+            messageForwardedCount: countRes.data!.totalSender!,
           );
     }
   }
