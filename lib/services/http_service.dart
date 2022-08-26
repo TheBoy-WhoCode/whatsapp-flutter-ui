@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_ui/common/enums/http_method_enum.dart';
 import 'package:whatsapp_ui/common/utils/utils.dart';
 
-const BASE_URL = "http://192.168.0.101:3000/";
+const BASE_URL = "http://13.235.103.138:3000/";
 final httpServiceProvider = Provider<HttpService>((ref) {
   return HttpService();
 });

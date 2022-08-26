@@ -28,7 +28,7 @@ class SenderMessageCard extends ConsumerWidget {
     required this.messageId,
     required this.isForwarded,
     required this.messageForwardCount,
-    
+    required this.isSpam,
   }) : super(key: key);
 
   final String message;
@@ -43,6 +43,7 @@ class SenderMessageCard extends ConsumerWidget {
   final String messageId;
   final bool isForwarded;
   final int messageForwardCount;
+  final bool isSpam;
 
   void forwardMessage(BuildContext context, Message message) {
     Navigator.pop(context);
@@ -183,6 +184,7 @@ class SenderMessageCard extends ConsumerWidget {
                               ),
                             ),
                             child: DisplayTextImageGif(
+                              isSpam: isSpam,
                               message: repliedText,
                               type: repliedMessageType,
                               isForwarded: isForwarded,
@@ -194,10 +196,11 @@ class SenderMessageCard extends ConsumerWidget {
                           ),
                         ],
                         DisplayTextImageGif(
+                          isSpam: isSpam,
                           message: message,
                           type: type,
                           isForwarded: isForwarded,
-                           messageForwardCount: messageForwardCount,
+                          messageForwardCount: messageForwardCount,
                         ),
                       ],
                     ),

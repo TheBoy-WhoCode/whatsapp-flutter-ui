@@ -124,8 +124,10 @@ class ChatRepository {
     required String blockId,
     required bool isForwarded,
     required int messageForwardedCount,
+    required bool isSpam,
   }) async {
     final message = Message(
+      isSpam: isSpam,
       messageForwardedCount: messageForwardedCount,
       blockId: blockId,
       senderId: auth.currentUser!.uid,
@@ -198,6 +200,7 @@ class ChatRepository {
     String? msgId,
     required bool isForwarded,
     required int messageForwardedCount,
+    required bool isSpam,
   }) async {
     try {
       var timeSent = DateTime.now();
@@ -217,6 +220,7 @@ class ChatRepository {
       );
 
       _saveMessageToMessageSubCollection(
+        isSpam: isSpam,
         messageForwardedCount: messageForwardedCount,
         recieverUserId: recieverUserId,
         text: text,
@@ -248,6 +252,7 @@ class ChatRepository {
     required String blockId,
     required bool isForwarded,
     required int messageForwardedCount,
+    required bool isSpam,
   }) async {
     try {
       var timeSent = DateTime.now();
@@ -292,6 +297,7 @@ class ChatRepository {
       );
 
       _saveMessageToMessageSubCollection(
+        isSpam: isSpam,
         messageForwardedCount: messageForwardedCount,
         recieverUserId: recieverUserId,
         text: imageUrl,

@@ -8,7 +8,7 @@ import 'package:whatsapp_ui/colors.dart';
 import 'package:whatsapp_ui/common/enums/message_enum.dart';
 import 'package:whatsapp_ui/features/chat/controller/chat_controller.dart';
 import 'package:whatsapp_ui/features/chat/widgets/contacts_list.dart';
-import 'package:whatsapp_ui/features/chat/widgets/display_text_image_gif.dart';
+import 'package:whatsapp_ui/features/chat/widgets/my_message_display_text.dart';
 import 'package:whatsapp_ui/models/message.dart';
 import 'package:whatsapp_ui/services/controller/http_controller.dart';
 
@@ -189,7 +189,7 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
                                 Radius.circular(6),
                               ),
                             ),
-                            child: DisplayTextImageGif(
+                            child: MyMessageDisplayText(
                               message: widget.repliedText,
                               type: widget.repliedMessageType,
                               isForwarded: widget.isForwarded,
@@ -200,7 +200,7 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
                             height: 8,
                           ),
                         ],
-                        DisplayTextImageGif(
+                        MyMessageDisplayText(
                           message: widget.message,
                           type: widget.type,
                           isForwarded: widget.isForwarded,

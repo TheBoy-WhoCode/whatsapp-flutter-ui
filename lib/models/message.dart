@@ -14,6 +14,7 @@ class Message {
   final String blockId;
   final bool isForwarded;
   final int messageForwardedCount;
+  final bool isSpam;
 
   Message({
     required this.senderId,
@@ -29,6 +30,7 @@ class Message {
     required this.blockId,
     required this.isForwarded,
     required this.messageForwardedCount,
+    required this.isSpam,
   });
 
   // Map<String, dynamic> toMap() {
@@ -75,7 +77,8 @@ class Message {
       'repliedMessageType': repliedMessageType.type,
       'blockId': blockId,
       'isForwarded': isForwarded,
-      'messageForwardedCount' : messageForwardedCount,
+      'messageForwardedCount': messageForwardedCount,
+      'isSpam' : isSpam,
     };
   }
 
@@ -93,7 +96,8 @@ class Message {
       repliedMessageType: (map['repliedMessageType'] as String).toEnum(),
       blockId: map['blockId'] ?? '',
       isForwarded: map['isForwarded'] ?? false,
-      messageForwardedCount : map['messageForwardedCount'] ?? 0,
+      messageForwardedCount: map['messageForwardedCount'] ?? 0,
+      isSpam: map['isSpam'] ?? false,
     );
   }
 }

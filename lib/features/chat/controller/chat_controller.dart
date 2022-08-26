@@ -55,6 +55,7 @@ class ChatController {
     String? messageId,
     required  bool isForwarded,
     required int messageForwardedCount,
+    required bool isSpam,
   }) {
     final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
@@ -68,6 +69,7 @@ class ChatController {
             msgId: messageId,
             isForwarded: isForwarded,
             messageForwardedCount: messageForwardedCount,
+            isSpam: isSpam,
           ),
         );
     ref.read(messageReplyProvider.state).update((state) => null);
@@ -81,6 +83,7 @@ class ChatController {
     required String blockId,
     required bool isForwarded,
     required int messageForwardedCount,
+    required bool isSpam,
   }) {
     final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
@@ -95,6 +98,7 @@ class ChatController {
             blockId: blockId,
             isForwarded: isForwarded,
             messageForwardedCount: messageForwardedCount,
+            isSpam: isSpam,
           ),
         );
     ref.read(messageReplyProvider.state).update((state) => null);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_ui/common/providers/message_reply_provider.dart';
 import 'package:whatsapp_ui/features/chat/widgets/display_text_image_gif.dart';
+import 'package:whatsapp_ui/features/chat/widgets/my_message_display_text.dart';
 
 class MessageReplyPreview extends ConsumerWidget {
   const MessageReplyPreview({Key? key}) : super(key: key);
@@ -47,7 +48,7 @@ class MessageReplyPreview extends ConsumerWidget {
           const SizedBox(
             height: 8,
           ),
-          DisplayTextImageGif(
+          MyMessageDisplayText(
             message: messageReply.message,
             type: messageReply.messageEnum,
             isForwarded: false,

@@ -53,6 +53,7 @@ class MobileChatScreen extends ConsumerWidget {
             messageId: message.messageId,
             isForwarded: true,
             messageForwardedCount: countRes.data!.totalSender!,
+            isSpam: message.isSpam,
           );
     }
   }

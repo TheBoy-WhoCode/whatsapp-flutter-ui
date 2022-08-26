@@ -101,6 +101,7 @@ class _ChatListState extends ConsumerState<ChatList> {
               receiverId: messageData.recieverId,
               messageId: messageData.messageId,
               message: messageData.text,
+              isSpam: messageData.isSpam,
               date: timeSent,
               type: messageData.type,
               username: messageData.repliedTo,

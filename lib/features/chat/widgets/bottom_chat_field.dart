@@ -27,7 +27,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   bool isShowSendButton = false;
   bool isSus = false;
   final TextEditingController _messageController = TextEditingController();
-  
+
   List<String> susWords = [
     "assasin",
     "kill",
@@ -91,6 +91,8 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
         }
       }
 
+      logger.d(isSus.toString());
+
       ref.read(loaderProvider.notifier).state = true;
       if (isShowSendButton) {
         final currentUserData =
@@ -117,6 +119,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                 blockId: response.id.toString(),
                 isForwarded: false,
                 messageForwardedCount: 0,
+                isSpam: isSus,
               );
         }
 
@@ -154,6 +157,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             blockId: response.id.toString(),
             isForwarded: false,
             messageForwardedCount: 0,
+            isSpam: isSus,
           );
     }
   }

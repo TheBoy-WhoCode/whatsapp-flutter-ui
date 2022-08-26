@@ -9,12 +9,14 @@ class DisplayTextImageGif extends StatelessWidget {
   final MessageEnum type;
   final bool isForwarded;
   final int messageForwardCount;
+  final bool isSpam;
   const DisplayTextImageGif({
     Key? key,
     required this.message,
     required this.type,
     required this.isForwarded,
     required this.messageForwardCount,
+    required this.isSpam,
   }) : super(key: key);
 
   @override
@@ -23,25 +25,54 @@ class DisplayTextImageGif extends StatelessWidget {
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              isForwarded
+              isForwarded || isSpam
                   ? Row(
                       mainAxisSize: MainAxisSize.min,
-                      children:  [
-                       const  FaIcon(
-                          FontAwesomeIcons.share,
-                          size: 14,
-                        ),
-                     messageForwardCount >= 5 ? const   Text(
-                          " forwarded many times",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ) : const   Text(
-                          " forwarded",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
+                      children: [
+                        isSpam && isForwarded
+                            ? Row(
+                                children: const [
+                                  FaIcon(
+                                    FontAwesomeIcons.triangleExclamation,
+                                    size: 14,
+                                    color: Colors.red,
+                                  ),
+                                  SizedBox(
+                                    width: 6,
+                                  ),
+                                  FaIcon(
+                                    FontAwesomeIcons.share,
+                                    size: 14,
+                                  ),
+                                ],
+                              )
+                            : isForwarded
+                                ? const FaIcon(
+                                    FontAwesomeIcons.share,
+                                    size: 14,
+                                  )
+                                : isSpam
+                                    ? const FaIcon(
+                                        FontAwesomeIcons.triangleExclamation,
+                                        size: 14,
+                                        color: Colors.red,
+                                      )
+                                    : const SizedBox(),
+                        messageForwardCount >= 5
+                            ? const Text(
+                                " forwarded many times",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              )
+                            : isForwarded
+                                ? const Text(
+                                    " forwarded",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  )
+                                : const SizedBox(),
                       ],
                     )
                   : const SizedBox(),
